@@ -1,0 +1,79 @@
+buildscript {
+    ext {
+        hawaiiFrameworkVersion = "3.0.0.M4"
+        javaVersion = "11"
+        oauthSpringBootVersion = "2.1.0.RELEASE"
+        springFrameworkVersion = "5.1.2.RELEASE"
+    }
+}
+
+plugins {
+    id "checkstyle"
+    id "com.github.spotbugs" version "1.6.6"
+    id "java"
+    id "maven-publish"
+    id "pmd"
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+version = "1.0.0-SNAPSHOT"
+group   = "org.hawaiiframework"
+
+dependencies {
+    compile("org.hawaiiframework:hawaii-cache:${hawaiiFrameworkVersion}")
+    compile("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:${oauthSpringBootVersion}")
+    compileOnly("org.springframework:spring-tx:${springFrameworkVersion}")
+}
+
+checkstyle {
+    configDir = file("${rootProject.projectDir}/src/quality/config/checkstyle")
+    ignoreFailures = false
+    sourceSets = [sourceSets.main]
+    toolVersion = "8.15"
+}
+
+pmd {
+    ignoreFailures = false
+    consoleOutput = true
+    ruleSetFiles = files("${rootProject.projectDir}/src/quality/config/pmd/pmd.xml")
+    ruleSets = [] // https://github.com/pmd/pmd/issues/876
+    sourceSets = [sourceSets.main]
+    toolVersion = "6.10.0"
+}
+
+spotbugs {
+    excludeFilter = file("${rootProject.projectDir}/src/quality/config/spotbugs/exclude.xml")
+    ignoreFailures = false
+    sourceSets = [sourceSets.main]
+    toolVersion = "3.1.9"
+}
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    options.deprecation = true
+    options.encoding = "UTF-8"
+    // add Xlint to our compiler options (but disable processing because of Spring warnings in code)
+    // and make warnings be treated like errors
+    options.compilerArgs += ["-Xlint:all", "-Xlint:-processing", "-Werror"]
+}
+
+tasks.withType(com.github.spotbugs.SpotBugsTask) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
