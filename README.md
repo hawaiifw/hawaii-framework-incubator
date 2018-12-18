@@ -7,6 +7,13 @@ The Hawaii Framework is released under version 2.0 of the [Apache License][].
 
 [Apache License]: http://www.apache.org/licenses/LICENSE-2.0
 
+## Building
+
+At the moment, this artifact is not published to a maven repository, so you need to build
+it yourself and publish it to your local maven repository by running
+
+    ./gradlew clean build publishToMavenLocal
+
 ## HawaiiTokenServices
 
 This is an implementation of the `ResourceServerTokenServices` interface from the
