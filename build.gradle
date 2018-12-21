@@ -21,7 +21,7 @@ repositories {
     jcenter()
 }
 
-version = "1.0.0.A1"
+version = "1.0.0.A2"
 group   = "org.hawaiiframework"
 
 dependencies {

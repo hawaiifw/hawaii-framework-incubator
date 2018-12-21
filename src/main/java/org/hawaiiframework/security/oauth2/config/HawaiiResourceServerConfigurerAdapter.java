@@ -26,6 +26,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
+import org.springframework.security.oauth2.client.OAuth2RestOperations;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -46,6 +47,7 @@ import org.springframework.security.oauth2.provider.token.store.jwk.JwkTokenStor
  */
 @EnableWebSecurity
 @EnableResourceServer
+@SuppressWarnings("checkstyle:ClassFanOutComplexity")
 public class HawaiiResourceServerConfigurerAdapter extends ResourceServerConfigurerAdapter {
 
     /**
@@ -72,7 +74,7 @@ public class HawaiiResourceServerConfigurerAdapter extends ResourceServerConfigu
      */
     @Bean
     @Primary
-    public OAuth2RestTemplate oAuth2RestOperations(
+    public OAuth2RestOperations oAuth2RestOperations(
             final OAuth2ProtectedResourceDetails resource, final OAuth2ClientContext clientContext) {
         return new OAuth2RestTemplate(resource, clientContext);
     }
@@ -88,7 +90,7 @@ public class HawaiiResourceServerConfigurerAdapter extends ResourceServerConfigu
      */
     @Bean
     public ResourceServerTokenServices resourceServerTokenServices(
-            final TokenStore jwkTokenStore, final OAuth2RestTemplate restTemplate, final ResourceServerProperties properties,
+            final TokenStore jwkTokenStore, final OAuth2RestOperations restTemplate, final ResourceServerProperties properties,
             final PrincipalExtractor principalExtractor, final Cache<Authentication> authenticationCache) {
         // Create a DefaultTokenServices with a JwkTokeStore that will check if the access token is valid or not.
         final DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
