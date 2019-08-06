@@ -25,9 +25,7 @@ version = "1.0.0.A2"
 group   = "org.hawaiiframework"
 
 dependencies {
-    compile("org.hawaiiframework:hawaii-cache:${hawaiiFrameworkVersion}")
-    compile("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:${oauthSpringBootVersion}")
-    compileOnly("org.springframework:spring-tx:${springFrameworkVersion}")
+    compile("org.hawaiiframework:hawaii-core:${hawaiiFrameworkVersion}")
 }
 
 checkstyle {
