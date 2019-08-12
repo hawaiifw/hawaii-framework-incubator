@@ -14,40 +14,28 @@ it yourself and publish it to your local maven repository by running
 
     ./gradlew clean build publishToMavenLocal
 
-## HawaiiTokenServices
+## Hawaii Framework Incubator and Hawaii Framework
+A few things need to be considered when using Hawaii Framework in combination with Hawaii Framework Incubator.
+Classes in Hawaii Framework Incubator could override classes in Hawaii Framework. 
+This introduces a problem when importing both projects. It is important that the developer has control over what class is used.
+Meaning the order of classes in the class path becomes important. Below are a few things that should be done or kept in mind.
 
-This is an implementation of the `ResourceServerTokenServices` interface from the
-`spring-security-oauth2-autoconfigure` package. It uses both a `JwkTokenStore` to validate
-the access token and a `UserInfoTokenServices` to query the user info endpoint.
+0. Put the Hawaii Framework Incubator dependency above all Hawaii Framework dependencies.
+    0. This is needed to be able to run correctly inside an IDE (for example Intellij) and building via the command line.
+0. Put the following in the build.gradle:
 
-So, in contrast to the regular Spring Security OAuth2 behaviour, you can specify
-both the `security.oauth2.resource.user-info-uri` and `security.oauth2.resource.jwk.key-set-uri`
-properties.
-
-To use this implemenation, define a class, eg `SecurityConfig` as follows:
-
-    import org.hawaiiframework.security.oauth2.config.HawaiiResourceServerConfigurerAdapter;
-    import org.springframework.context.annotation.Configuration;
-    import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-    import org.springframework.security.config.http.SessionCreationPolicy;
-
-    /**
-     * Security configuration.
-     */
-    @Configuration
-    public class SecurityConfig extends HawaiiResourceServerConfigurerAdapter {
-    
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void configure(final HttpSecurity http) throws Exception {
-            http
-                    .authorizeRequests()
-                    .antMatchers("/", "/index.html", "/public/**").permitAll()
-                    .antMatchers("/private/**").authenticated();
+    ```
+    bootJar {
+        with copySpec {
+            into "/lib-overload"
+            from configurations.runtime.filter { it.name.contains("hawaii-framework-incubator") }
         }
-    
+        manifest {
+            attributes 'Main-Class': 'org.springframework.boot.loader.PropertiesLauncher'
+            attributes 'Loader-Path': '/lib-overload,lib'
+        }
     }
+    ```
+    0. This is executed when creating a jar, this will force Hawaii Framework Incubator to be loaded before the `lib` director
+    inside the jar. 
 
-You can then continue to use Spring Security OAuth2 as usual.
