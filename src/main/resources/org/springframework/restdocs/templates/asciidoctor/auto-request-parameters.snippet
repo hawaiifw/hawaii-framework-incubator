@@ -1,0 +1,15 @@
+{{#isPageRequest}}{{pagination-request-adoc}}
+
+{{/isPageRequest}}{{#hasContent}}
+[cols="8,1,1,6"]
+|===
+|{{th-parameter}}|{{th-type}}|{{th-optional}}|{{th-description}}
+
+{{#content}}
+|`{{path}}`
+|`{{type}}`
+|{{optional}}
+|{{description}}
+
+{{/content}}
+|==={{/hasContent}}{{#noContent}}{{no-params}}{{/noContent}}

@@ -1,9 +1,11 @@
 buildscript {
     ext {
-        hawaiiFrameworkVersion = "3.0.0.M4"
+        hawaiiFrameworkVersion = "3.0.0.BUILD-SNAPSHOT"
         javaVersion = "11"
         oauthSpringBootVersion = "2.1.0.RELEASE"
         springFrameworkVersion = "5.1.2.RELEASE"
+        springRestDocsVersion = '2.0.2.RELEASE'
+        springAutoRestDocsVersion = '2.0.4'
     }
 }
 
@@ -21,11 +23,36 @@ repositories {
     jcenter()
 }
 
-version = "1.0.0.A2"
-group   = "org.hawaiiframework"
+version = "1.0.0.A3"
+group = "org.hawaiiframework"
 
 dependencies {
-    compile("org.hawaiiframework:hawaii-core:${hawaiiFrameworkVersion}")
+
+    compileOnly("net.ttddyy:datasource-proxy:1.4.2")
+    compileOnly("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.9")
+    compileOnly("com.google.code.findbugs:jsr305:3.0.2")
+    compileOnly("org.hibernate:hibernate-validator:6.0.17.Final")
+    compile("javax.validation:validation-api:2.0.1.Final")
+
+    // <rest autodoc>
+    compileOnly("com.kjetland:mbknor-jackson-jsonschema_2.11:1.0.29")
+    compileOnly("org.springframework.restdocs:spring-restdocs-mockmvc:${springRestDocsVersion}")
+    compileOnly(group: 'capital.scalable', name: 'spring-auto-restdocs-core', version: "${springAutoRestDocsVersion}")
+    // </rest autodoc>
+
+    compileOnly("org.springframework:spring-jdbc:${springFrameworkVersion}")
+    compileOnly("org.springframework.data:spring-data-redis:2.1.9.RELEASE")
+
+    compileOnly("org.hawaiiframework:hawaii-async:${hawaiiFrameworkVersion}")
+
+
+    // <test_dependencies>
+    testCompileOnly("org.junit.jupiter:junit-jupiter-api:5.4.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.4.0")
+
+    // https://mvnrepository.com/artifact/org.mockito/mockito-core
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.10.0'
+    // </test_dependencies>
 }
 
 checkstyle {
