@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        hawaiiFrameworkVersion = "3.0.0.M9"
+        hawaiiFrameworkVersion = "3.0.0.M14"
         javaVersion = "11"
         oauthSpringBootVersion = "2.1.0.RELEASE"
         springFrameworkVersion = "5.1.2.RELEASE"
@@ -23,7 +23,7 @@ repositories {
     jcenter()
 }
 
-version = "1.0.0.M4"
+version = "1.0.0.M14-SNAPSHOT"
 group = "org.hawaiiframework"
 
 dependencies {
@@ -40,6 +40,10 @@ dependencies {
     compileOnly(group: 'capital.scalable', name: 'spring-auto-restdocs-core', version: "${springAutoRestDocsVersion}")
     // </rest autodoc>
 
+    // Library for IO
+    compileOnly("commons-io:commons-io:2.5")
+
+    compileOnly("org.springframework.boot:spring-boot:2.2.5.RELEASE")
     compileOnly("org.springframework:spring-jdbc:${springFrameworkVersion}")
     compileOnly("org.springframework.data:spring-data-redis:2.1.9.RELEASE")
 
