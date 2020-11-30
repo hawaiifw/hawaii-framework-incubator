@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        hawaiiFrameworkVersion = "3.0.0.M14"
+        hawaiiFrameworkVersion = "3.0.0.M20"
         javaVersion = "11"
         oauthSpringBootVersion = "2.1.0.RELEASE"
         springFrameworkVersion = "5.1.2.RELEASE"
@@ -23,7 +23,7 @@ repositories {
     jcenter()
 }
 
-version = "1.0.0-M14"
+version = "1.0.0-M20"
 group = "org.hawaiiframework"
 
 dependencies {
