@@ -27,9 +27,9 @@ public class KibanaLogTransaction implements AutoCloseable {
         final String txId = KibanaLogFields.get(TX_ID);
         hasTx = StringUtils.isNotBlank(txId);
         if (!hasTx) {
-            KibanaLogFields.set(TX_ID, createTxId());
+            KibanaLogFields.tag(TX_ID, createTxId());
         }
-        KibanaLogFields.set(KibanaLogFieldNames.TX_TYPE, transactionType);
+        KibanaLogFields.tag(KibanaLogFieldNames.TX_TYPE, transactionType);
     }
 
     /**
