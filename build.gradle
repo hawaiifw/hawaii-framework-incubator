@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        hawaiiFrameworkVersion = "3.0.0.M22"
+        hawaiiFrameworkVersion = "3.0.0.M23"
         javaVersion = "11"
         oauthSpringBootVersion = "2.1.0.RELEASE"
         springFrameworkVersion = "5.1.2.RELEASE"
@@ -23,7 +23,7 @@ repositories {
     jcenter()
 }
 
-version = "1.0.0.M7"
+version = "1.0.0.M8"
 group = "org.hawaiiframework"
 
 dependencies {
@@ -49,6 +49,7 @@ dependencies {
 
     compileOnly("org.hawaiiframework:hawaii-async:${hawaiiFrameworkVersion}")
 
+    runtime("org.apache.commons:commons-lang3:3.8.1")
 
     // <test_dependencies>
     testCompileOnly("org.junit.jupiter:junit-jupiter-api:5.4.0")
