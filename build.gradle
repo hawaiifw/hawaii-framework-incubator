@@ -23,7 +23,7 @@ repositories {
     jcenter()
 }
 
-version = "1.0.0.M8"
+version = "1.0.0.M9-SNAPSHOT"
 group = "org.hawaiiframework"
 
 dependencies {
